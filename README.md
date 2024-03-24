@@ -25,6 +25,7 @@ cd mms-data-scripts
 To generate a cohort for a specific year, run the following command:
 
 ```node CohortGenerator.mjs <Year>```
+<br/>
 Example:
 
 ```node CohortGenerator.mjs 2022```
@@ -33,6 +34,7 @@ Example:
 To generate class results for a specific cohort file, class code, average, and standard deviation, use:
 
 ```node ClassResultsGenerator.mjs <CohortFile> <ClassCode> <Average> <StandardDeviation>```
+<br/>
 Example:
 
 ```node ClassResultsGenerator.mjs CohortOf2022.csv CS426 70 15```
