@@ -1,0 +1,26 @@
+{
+  "name": "mms-data-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "CohortGenerator.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
+    "@faker-js/faker": "^8.3.1",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "@stdlib/random-base-improved-ziggurat": "^0.1.0",
+    "csv-parse": "^5.5.3",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.6.5"
+  }
+}
