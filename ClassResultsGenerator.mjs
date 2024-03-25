@@ -2,6 +2,7 @@ import fs from "fs";
 import randn from "@stdlib/random-base-improved-ziggurat";
 import { parse } from "csv-parse/sync";
 
+//Arguments from the command line
 const args = process.argv.slice(2);
 const cohortFile = args[0];
 const classCode = args[1];
@@ -14,6 +15,7 @@ function GenerateClassResults(
   average,
   standardDeviation
 ) {
+  //Input validation and associated error messages
   if (cohortFile.slice(-4).toLowerCase() !== ".csv") {
     console.error(
       "Error: None CSV input\nEnsure any file chosen ends in '.csv'"
@@ -35,6 +37,7 @@ function GenerateClassResults(
     );
     return;
   }
+  //Cohort must exist in the cohorts folder
   const filePath = `GeneratedFiles/Cohorts/${cohortFile}`;
   const data = fs.readFileSync(filePath, "utf8");
   const cohortData = parse(data, {
@@ -47,11 +50,14 @@ function GenerateClassResults(
   var fileName = `ClassFile${classCode}${cohortFile.slice(-8, -4)}.csv`;
 
   var fileContents = fileHeader;
+  // the result is ranged between 0-100 where randn() is a ziggurat number on the standard distribution
+  //The ziggurat number is multiplied by the standardDeviation and the average is added to place it somewhere surrounding the mean
   cohortData.forEach((student) => {
     var result = Math.max(
       0,
       Math.min(Math.round(randn() * standardDeviation + average), 100)
     );
+    //Create the unique code from various bits of their information
     var uniqueCode =
       student.CourseName.substring(0, 2).toUpperCase() +
       student.Student.substring(0, 2).toUpperCase() +
@@ -59,10 +65,11 @@ function GenerateClassResults(
       classCode.substring(2, 5).toUpperCase();
     fileContents += `${classCode},${student.RegistrationNumber},${result},${student.Student},${student.DegreeLevel},${student.CourseName},${uniqueCode}\n`;
   });
-
+  //Write the file to to generated files
   fs.writeFileSync(`GeneratedFiles/${fileName}`, fileContents);
 }
 
+//If parameters are missing then give an example usage
 if (args.length < 4) {
   console.log(
     "Missing params, format is: node ClassGenerator.mjs <CohortFile> <ClassCode> <Average> <StandardDeviation>\nExample: node ClassResultsGenerator.mjs CohortOf2022.csv CS426 70 15"
